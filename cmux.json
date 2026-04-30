@@ -1,0 +1,35 @@
+{
+  "commands": [
+    {
+      "name": "New worktree",
+      "keywords": ["worktree", "new", "git", "branch", "claude", "agent", "feature", "cwt"],
+      "command": "cwt "
+    },
+    {
+      "name": "New worktree (codex)",
+      "keywords": ["worktree", "codex", "agent"],
+      "command": "cwt -a codex "
+    },
+    {
+      "name": "New worktree (no agent)",
+      "keywords": ["worktree", "shell", "no-agent"],
+      "command": "cwt --no-agent "
+    },
+    {
+      "name": "Tabs (worktrees in current workspace)",
+      "keywords": ["worktree", "tabs", "race", "parallel", "agents"],
+      "command": "cwt tabs "
+    },
+    {
+      "name": "Close worktree",
+      "keywords": ["worktree", "close", "done", "cleanup", "remove"],
+      "command": "cwt done ",
+      "confirm": true
+    },
+    {
+      "name": "List worktrees",
+      "keywords": ["worktree", "list", "ls"],
+      "command": "cwt list"
+    }
+  ]
+}
