@@ -19,8 +19,8 @@
 #   slug "fix-leak"        → branch fix/leak
 #   slug "hotfix-3.7.3"    → branch hotfix/3.7.3
 #   slug "exp-rewrite"     → branch exp/rewrite
-#   slug "PROJ-123"        → branch feat/PROJ-123
-#   slug "fix/cache"       → branch fix/cache (slash kept as-is)
+#   slug "PROJ-123"        → branch PROJ-123        (no recognized prefix → branch is the slug)
+#   slug "fix/cache"       → branch fix/cache       (slash kept as-is)
 #
 # new flags:
 #   -d, --description <text>   workspace description (default: slug)
@@ -59,7 +59,8 @@ worktrees_root_for() {
 
 # Map a slug to a branch name. Common prefixes (fix-, hotfix-, exp-, wip-,
 # refactor-, chore-, docs-) become namespaces. Slugs already containing a slash
-# are used verbatim. Everything else falls through to feat/<slug>.
+# are used verbatim. Everything else passes through unchanged (the slug *is*
+# the branch name — no implicit namespace).
 slug_to_branch() {
   local s=$1
   if [[ "$s" == */* ]]; then
@@ -74,7 +75,7 @@ slug_to_branch() {
     refactor-*|refactor_*)  printf 'refactor/%s' "${s#refactor[-_]}" ;;
     chore-*|chore_*)        printf 'chore/%s'    "${s#chore[-_]}" ;;
     docs-*|docs_*)          printf 'docs/%s'     "${s#docs[-_]}" ;;
-    *)                      printf 'feat/%s'     "$s" ;;
+    *)                      printf '%s'          "$s" ;;
   esac
 }
 
@@ -95,8 +96,8 @@ Usage:
 Slug → branch:
   fix-leak       → fix/leak
   hotfix-3.7.3   → hotfix/3.7.3
-  PROJ-123       → feat/PROJ-123
-  fix/cache      → fix/cache (already namespaced)
+  PROJ-123       → PROJ-123       (no recognized prefix → branch matches slug)
+  fix/cache      → fix/cache      (already namespaced)
 
 Defaults:
   agent  \$CMUX_WORKTREE_AGENT or 'claude'
